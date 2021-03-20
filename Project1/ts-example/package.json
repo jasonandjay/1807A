@@ -1,0 +1,17 @@
+{
+  "name": "ts-example",
+  "version": "1.0.0",
+  "description": "introducte typescript syntax",
+  "main": "index.js",
+  "scripts": {
+    "watch": "tsc --watch",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "tsc",
+    "typescript"
+  ],
+  "author": "jasonandjay",
+  "license": "ISC"
+}
