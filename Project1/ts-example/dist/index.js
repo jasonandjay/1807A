@@ -20,3 +20,21 @@ var isEqual = function (a, b) {
 var isEqualCommon = function (a, b) {
     return a === b;
 };
+// 当T为number时
+isEqualCommon(1, 2);
+isEqualCommon('abc', '123');
+// Partial把一个类型内部当所有属性转成可选
+var d = {
+    a: '',
+};
+var e = '';
+var f = function () { };
+// 类型操作，联合类型(或)和交叉类型(且)
+var g = '';
+var h = {
+    code: 100,
+    msg: '',
+    error: ''
+};
+// 类型推断 as
+var j = {}.code;

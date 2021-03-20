@@ -13,5 +13,9 @@
     "typescript"
   ],
   "author": "jasonandjay",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@types/js-cookie": "^2.2.6",
+    "js-cookie": "^2.2.1"
+  }
 }
