@@ -6,3 +6,17 @@ export interface IBrandItem{
     newTags: string [],
     tagurl: string
 }
+export interface IMakeItem{
+    SerialID: string,
+    AliasName: string,
+    CoverPhoto: string,
+    Picture: string,
+    DealerPrice: string,
+    Spelling: string,
+    FullSpelling: string,
+    Level: string,
+    orderCount: number,
+    tags: string [],
+    tagurl: string,
+    // [key:string]: string|number|string[]
+}

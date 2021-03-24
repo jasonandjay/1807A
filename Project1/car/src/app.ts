@@ -1,5 +1,7 @@
 import { RequestConfig } from 'umi';
+import { createLogger } from 'redux-logger';
 
+// 网络请求配置
 const baseURL = 'https://baojia.chelun.com';
 export const request: RequestConfig = {
     timeout: 3000,
@@ -28,4 +30,11 @@ export const request: RequestConfig = {
         }
         return response;
     }]
+};
+
+// dva配置
+export const dva = {
+  config: {
+    onAction: createLogger()
+  },
 };
