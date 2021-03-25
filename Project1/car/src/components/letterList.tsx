@@ -52,6 +52,12 @@ const LetterList: React.FC<IProps> = props => {
         props.moveLetter('');
     }
 
+    /** 
+     * 移动端事件触发顺序
+     * touchstart -> touchmove -> touchend -> click
+     * */ 
+
+
     return <ul
         ref={ulEle}
         className={styles.container}

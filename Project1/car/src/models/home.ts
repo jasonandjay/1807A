@@ -2,9 +2,14 @@ import { Effect, ImmerReducer, Reducer, Subscription } from 'umi';
 import {IBrandItem, IMakeItem} from '@/utils/interface'
 import {getBrandList, getMakeList} from '@/services'
 
+interface IBrandList{
+    letter: string,
+    list: IBrandItem[]
+}
+
 export interface IndexModelState {
     name: string;
-    brandList: IBrandItem [];
+    brandList: IBrandList [];
     makeList: IMakeItem [];
     letterList: string [];
 }
@@ -48,16 +53,17 @@ const IndexModel: IndexModelType = {
                 });
                 letterList = [...new Set(arr)] as string[];
                 // 处理品牌列表
-                let brandList:{[key:string]: IBrandItem[]}[] = [];
+                let brandList: IBrandList[] = [];
                 result.data.forEach((item:IBrandItem) => {
                     let letter = item.Spelling[0];
-                    let index = brandList.findIndex((value)=>Object.keys(value)[0]===letter);
+                    let index = brandList.findIndex((value)=>value.letter===letter);
                     if (index === -1){
                         brandList.push({
-                            [letter]: [item]
+                            letter,
+                            list: [item]
                         })
                     }else{
-                        brandList[index][letter].push(item);
+                        brandList[index].list.push(item);
                     }
                 });
                 yield put({

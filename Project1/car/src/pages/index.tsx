@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 // import...from启用css module
 import styles from './index.less';
 // import './index.less';
 // 获取redux中的状态和方法
 import { useSelector, useDispatch } from 'umi';
 import LetterList from '@/components/letterList'
-import { IBrandItem } from '@/utils/interface';
 
 const IndexPage: React.FC = () => {
   const { brandList, makeList, letterList } = useSelector(state => state.home);
@@ -14,6 +13,8 @@ const IndexPage: React.FC = () => {
   let [curMasterID, setCurMasterID] = useState<string>('');
   // 存储当前滑动品牌字母
   let [curLetter, setCurLetter] = useState<string>('');
+  // 滚动容器
+  let container = useRef(null);
 
   useEffect(() => {
     dispatch({
@@ -42,28 +43,30 @@ const IndexPage: React.FC = () => {
   }
 
   useEffect(() => {
-
+    if (curLetter) {
+      let target = (container.current! as HTMLElement).querySelector(`#${curLetter}`);
+      target?.scrollIntoView();
+      // debugger
+    }
   }, [curLetter])
 
-  if (!brandList.length){
+  if (!brandList.length) {
     return null;
   }
   console.log(brandList);
-  return <div className={styles.container}>
+  return <div className={styles.container} ref={container}>
     <div className={styles.brandContainer}>{
       brandList.map(value => {
-        return <ul>
-          <p>{Object.keys(value)[0]}</p>
-          {
-            Object.values(value)[0].map((item:any) => {
-              return <p>{JSON.stringify(item)}</p>
-            return <li id={item.Spelling[0]} key={item.MasterID} className="li" onClick={e => brandListClick(e, item.MasterID)}>
-                <img className={styles.avatar} src={item.CoverPhoto} alt="" />
-                <span>{item.Name}</span>
-              </li>
-            })
-          }
-        </ul>
+        return <div id={value.letter} key={value.letter}>
+          <p>{value.letter}</p>
+          <ul>{value.list.map((item: any) => {
+            return <li key={item.Spelling} id={item.Spelling[0]} className="li" onClick={e => brandListClick(e, item.MasterID)}>
+              <img className={styles.avatar} src={item.CoverPhoto} alt="" />
+              <span>{item.Name}</span>
+            </li>
+          })
+          }</ul>
+        </div>
       })
     }</div>
     <LetterList list={letterList} moveLetter={moveLetter}></LetterList>
