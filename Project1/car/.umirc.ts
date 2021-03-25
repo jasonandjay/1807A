@@ -1,4 +1,6 @@
 import { defineConfig } from 'umi';
+var pxtorem = require('postcss-pxtorem');
+var px2rem = require('postcss-px2rem');
 
 export default defineConfig({
   metas: [
@@ -17,5 +19,6 @@ export default defineConfig({
   dva: {
     immer: true,
     hmr: false,
-  }
+  },
+  extraPostCSSPlugins: [px2rem({remUnit: 75})]
 });

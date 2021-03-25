@@ -1,5 +1,6 @@
 import { RequestConfig } from 'umi';
 import { createLogger } from 'redux-logger';
+import "lib-flexible" ;
 
 // 网络请求配置
 const baseURL = 'https://baojia.chelun.com';
