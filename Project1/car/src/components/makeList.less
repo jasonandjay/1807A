@@ -1,0 +1,21 @@
+.container{
+    width: 75%;
+    height: 100%;
+    background: #ccc;
+    position: fixed;
+    top: 0;
+    right: -75%;
+    overflow-y: scroll;
+    img{
+        width: 80px;
+    }
+}
+.start{
+    composes: container;
+    transform: translateX(-100%);
+    transition: all .3s linear;
+}
+.end{
+    transform: translateX(0);
+    transition: all .3s linear;
+}

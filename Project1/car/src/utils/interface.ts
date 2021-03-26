@@ -7,6 +7,11 @@ export interface IBrandItem{
     tagurl: string
 }
 export interface IMakeItem{
+    GroupId: string,
+    GroupName: string,
+    GroupList: IGroupItem[]
+}
+export interface IGroupItem{
     SerialID: string,
     AliasName: string,
     CoverPhoto: string,

@@ -7,29 +7,29 @@ interface IBrandList{
     list: IBrandItem[]
 }
 
-export interface IndexModelState {
+export interface HomeModelState {
     name: string;
     brandList: IBrandList [];
     makeList: IMakeItem [];
     letterList: string [];
 }
 
-export interface IndexModelType {
+export interface HomeModelType {
     namespace: 'home';
-    state: IndexModelState;
+    state: HomeModelState;
     effects: {
         getMasterBrand: Effect;
         getMakeList: Effect;
     };
     reducers: {
-        save: Reducer<IndexModelState>;
+        save: Reducer<HomeModelState>;
         // 启用 immer 之后
         // save: ImmerReducer<IndexModelState>;
     };
     subscriptions: { setup: Subscription };
 }
 
-const IndexModel: IndexModelType = {
+const HomeModel: HomeModelType = {
     //  命名空间
     namespace: 'home',
 
@@ -110,4 +110,4 @@ const IndexModel: IndexModelType = {
     }
 };
 
-export default IndexModel;
+export default HomeModel;
