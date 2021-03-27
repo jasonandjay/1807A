@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useSelector } from 'umi'
+import { useSelector, useHistory } from 'umi'
 import styles from './makeList.less'
 import { IRootState } from '@/models/index'
 import { HomeModelState } from '@/models/home'
@@ -12,6 +12,7 @@ const MakeList: React.FC<IProps> = props => {
     const { makeList } = useSelector<IRootState, HomeModelState>(state => state.home)
     const [pos, setPos] = useState<{x:number, y:number}>({x: 0, y:0});
     const conatiner = useRef(null);
+    const history = useHistory();
 
     useEffect(() => {
         setShow(true)
@@ -50,6 +51,15 @@ const MakeList: React.FC<IProps> = props => {
             }, 300);
         }
     }
+    
+    /**
+     * React中绑定事件
+     * Class组件：construct中bind，箭头函数，在render里面bind
+     * 函数式组件：useCallBack
+     */
+    function clickGroup(SerialID: string){
+        history.push('/detail?SerialID='+SerialID);
+    }
 
     return <div ref={conatiner} className={show ? styles.start : styles.container}
                 onTouchStart={touchStart}
@@ -61,7 +71,9 @@ const MakeList: React.FC<IProps> = props => {
                 <p>{item.GroupName}</p>
                 <ul>{
                     item.GroupList.map(value => {
-                        return <li key={value.SerialID}>
+                        // return <li key={value.SerialID} onClick={clickGroup}>
+                        return <li key={value.SerialID} onClick={e=>clickGroup(value.SerialID)}>
+                        {/* return <li key={value.SerialID} onClick={clickGroup.bind(undefined, '12')}> */}
                             <img src={value.Picture} alt="" />
                             <span>{value.AliasName}</span>
                         </li>
@@ -72,3 +84,11 @@ const MakeList: React.FC<IProps> = props => {
 }
 
 export default MakeList;
+
+// 手动实现一个bind
+// Function.prototype.myBind = function(context, ...args){
+//     let that = this;
+//     return function(){
+//         that.apply(context, [...args, ...arguments]);
+//     }
+// }

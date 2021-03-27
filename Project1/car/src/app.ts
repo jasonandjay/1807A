@@ -5,7 +5,7 @@ import "lib-flexible" ;
 // 网络请求配置
 const baseURL = 'https://baojia.chelun.com';
 export const request: RequestConfig = {
-    timeout: 3000,
+    timeout: 30000,
     errorConfig: {},
     // 请求拦截器
     requestInterceptors: [(url, options) => {
