@@ -2,7 +2,6 @@ import { Effect, ImmerReducer, Reducer, Subscription } from 'umi';
 import { IDetialInfo, IListCarItem, ICarItem, IYearListCarItem } from '@/utils/interface'
 import { getInfoAndList } from '@/services'
 
-
 export interface DetailModelState {
     info: IDetialInfo,
     years: string[],
@@ -15,6 +14,7 @@ export interface DetailModelType {
     namespace: 'detail';
     state: DetailModelState;
     effects: {
+        changeYearAndList: Effect;
         getInfoAndList: Effect;
     };
     reducers: {
@@ -37,6 +37,30 @@ const DetailModel: DetailModelType = {
 
     // 异步action(ajax, setTimeout, Promise)
     effects: {
+        *changeYearAndList({payload}, {call, put, select}) {
+            let {yearListCars}: {yearListCars: IYearListCarItem[]} = yield select((state: any)=>state.detail);
+             // 4. 按照年份过滤数据
+            let curList:ICarItem[] = [],
+                 curYearListCars = [];
+            if (payload.year === '全部'){
+                yearListCars.forEach(item=>{
+                    curList = curList.concat(item.list);
+                })
+            }else{
+                let index = yearListCars.findIndex(item=>item.year === payload.year);
+                if (index !== -1){
+                    curList = yearListCars[index].list;
+                }
+            }
+            curYearListCars = merge(curList);
+            yield put({
+                type: 'save',
+                payload: {
+                    curYearListCars,
+                    curYear: payload.year
+                }
+            })
+        },
         *getInfoAndList({ payload }, { call, put }) {
             let result = yield call(getInfoAndList, payload.SerialID);
             if (result.code === 1) {

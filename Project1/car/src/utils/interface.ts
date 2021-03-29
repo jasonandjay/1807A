@@ -64,6 +64,15 @@ export interface IYearListCarItem{
     list: ICarItem[]
 }
 
+export interface IYearListItem<T>{
+    year: string,
+    list: T[]
+}
+export interface IListItem<T>{
+    type: string, 
+    list: T[]
+}
+
 export interface IDetialInfo{
     AliasName: string,
     BrandName: string,
