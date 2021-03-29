@@ -54,6 +54,16 @@ export interface ICarItem{
     }
 }
 
+export interface IListCarItem{
+    type: string,
+    list: ICarItem[]
+}
+
+export interface IYearListCarItem{
+    year: string,
+    list: ICarItem[]
+}
+
 export interface IDetialInfo{
     AliasName: string,
     BrandName: string,
