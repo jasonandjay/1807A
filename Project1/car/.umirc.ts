@@ -19,5 +19,9 @@ export default defineConfig({
     immer: true,
     hmr: false,
   },
-  extraPostCSSPlugins: [px2rem({remUnit: 75})]
+  extraPostCSSPlugins: [px2rem({remUnit: 75})],
+  publicPath: './',
+  base: '/1807A/chenmanjie/car',
+  hash: true,
+  dynamicImport: {}
 });
