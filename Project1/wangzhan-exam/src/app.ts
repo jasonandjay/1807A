@@ -1,12 +1,20 @@
 import { RequestConfig } from 'umi';
 import { createLogger } from 'redux-logger';
 import {getToken} from '@/utils/index'
+import {message} from 'antd'
 
 // 网络请求配置
 const baseURL = '//10.34.6.12:7002';
 export const request: RequestConfig = {
     timeout: 30000,
-    errorConfig: {},
+    errorConfig: {
+        adaptor: resData=>{
+            console.log('resData...', resData);
+            return {
+                success: true
+            }
+        }
+    },
     // 请求拦截器
     requestInterceptors: [(url, options) => {
         url = baseURL + url;
@@ -31,8 +39,9 @@ export const request: RequestConfig = {
             503: '服务不可用，服务器暂时过载或维护',
             504: '网关超时',
         };
+        console.log('response...', response)
         if (response.status !== 200) {
-            console.warn(codeMaps[response.status]);
+            message.error(codeMaps[response.status]);
         }
         return response;
     }]
