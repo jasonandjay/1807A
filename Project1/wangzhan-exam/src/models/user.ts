@@ -1,8 +1,9 @@
 import { Effect, ImmerReducer, Reducer, Subscription } from 'umi';
 import {login} from '@/services/index'
+import {getToken, setToken, removeToken} from '@/utils/index'
 
 export interface UserModelState {
-  name: string;
+  isLogin: boolean;
 }
 
 export interface UserModelType {
@@ -10,6 +11,7 @@ export interface UserModelType {
   state: UserModelState;
   effects: {
     login: Effect;
+    logout: Effect;
   };
   reducers: {
     save: Reducer<UserModelState>;
@@ -21,14 +23,27 @@ const UserModel: UserModelType = {
   namespace: 'user',
 
   state: {
-    name: '',
+    isLogin: !!getToken(),
   },
 
   effects: {
     *login({ payload }, { call, put }) {
       let result = yield call(login, payload);
-      debugger;
+      if (result.code === 1){
+        yield put({
+          type: 'save',
+          payload: {isLogin: true}
+        })
+        setToken(result.token, payload.remember);
+      }
     },
+    *logout({}, {put}){
+      removeToken();
+      yield put({
+        type: 'save',
+        payload: {isLogin: false}
+      })
+    }
   },
   reducers: {
     save(state, action) {
@@ -37,18 +52,23 @@ const UserModel: UserModelType = {
         ...action.payload,
       };
     },
-    // 启用 immer 之后
-    // save(state, action) {
-    //   state.name = action.payload;
-    // },
   },
   subscriptions: {
     setup({ dispatch, history }) {
       return history.listen(({ pathname }) => {
+        // 判断有没有登录态
+        if (!getToken()){
+          history.replace(`/login?from=${encodeURIComponent(pathname)}`);
+        }else{
+          if (pathname === '/login'){
+            history.goBack();
+          }
+        }
         if (pathname === '/') {
-          dispatch({
-            type: 'query',
-          })
+          history.replace('/main/addQuestion');
+          // dispatch({
+            // type: 'query',
+          // })
         }
       });
     }

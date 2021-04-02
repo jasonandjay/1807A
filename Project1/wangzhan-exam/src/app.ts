@@ -1,17 +1,23 @@
 import { RequestConfig } from 'umi';
 import { createLogger } from 'redux-logger';
+import {getToken} from '@/utils/index'
 
 // 网络请求配置
-const baseURL = '//10.34.6.3:7002';
+const baseURL = '//10.34.6.12:7002';
 export const request: RequestConfig = {
     timeout: 30000,
     errorConfig: {},
     // 请求拦截器
     requestInterceptors: [(url, options) => {
         url = baseURL + url;
+        let headers = {};
+        debugger
+        if (getToken()){
+            headers = {'authorization': getToken()}
+        }
         return {
             url,
-            options,
+            options: {...options, headers}
         };
     }],
     // 响应拦截器

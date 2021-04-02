@@ -1,16 +1,22 @@
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import {useDispatch} from 'umi';
+import {useDispatch, useHistory, useLocation} from 'umi';
 import styles from './login.less'
 import {ILoginItem} from '@/utils/interface'
 
 const LoginPage: React.FC = () => {
     const dispatch = useDispatch();
+    const history = useHistory();
+    const location = useLocation();
     const onFinish = (payload: ILoginItem) => {
-        console.log('Received values of form: ', payload);
-        dispatch({
+        let result = dispatch({
             type: 'user/login',
             payload
+        });
+        
+        (result as never as Promise<any>).then(res=>{
+            let {query: {from}} = (location as unknown as {query: {from:string}})
+            history.replace(decodeURIComponent(from) || '/');
         })
     };
 
