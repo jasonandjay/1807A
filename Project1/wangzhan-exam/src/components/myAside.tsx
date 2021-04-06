@@ -1,11 +1,12 @@
 import React from 'react'
 import {Layout, Menu} from 'antd'
-import {MailOutlined} from '@ant-design/icons'
-import {NavLink, useLocation} from 'umi'
+import {NavLink, useLocation, UserModelState, useSelector} from 'umi'
+import IRootModelState from '@/models'
 
 const {Sider} = Layout
 const {SubMenu, Item} = Menu
 const MyHeader: React.FC = ()=>{
+    const {myMenu} = useSelector<IRootModelState, UserModelState>(state => state.user)
     // 从地址栏拿到当前展开的子菜单和高亮项
     const {pathname} = useLocation();
     const selectKey = pathname.split('/').pop() as string;
@@ -18,19 +19,17 @@ const MyHeader: React.FC = ()=>{
             theme="dark"
             defaultOpenKeys={[openKey]}
             defaultSelectedKeys={[selectKey]}
-        >
-            <SubMenu title="试题管理" key="question">
-                <Item icon={<MailOutlined />} key="addQuestion">
-                    <NavLink to="/main/addQuestion">添加试题</NavLink>
-                </Item>
-                <Item icon={<MailOutlined />} key="classifyQuestion">
-                    <NavLink to="/main/classifyQuestion">试题分类</NavLink>
-                </Item>
-                <Item icon={<MailOutlined />} key="viewQuestion">
-                    <NavLink to="/main/viewQuestion">查看试题</NavLink>
-                </Item>
-            </SubMenu>
-        </Menu>
+        >{
+            myMenu.map(item=>{
+                return <SubMenu icon={<item.meta.icon/>} title={item.name} key={item.name}>{
+                    item.children?.filter(item=>item.meta.show)?.map(value=>{
+                        return <Item key={value.name}>
+                            <NavLink to={value.path}>{value.name}</NavLink>
+                        </Item>
+                    })
+                }</SubMenu>
+            })
+        }</Menu>
     </Sider>
 }
 export default MyHeader

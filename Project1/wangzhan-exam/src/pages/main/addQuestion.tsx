@@ -1,10 +1,7 @@
 import React, { useEffect } from 'react'
+import {request} from 'umi'
 
 const AddQuestion:React.FC = props=>{
-    useEffect(() => {
-        fetch('http://baidu.com/user/list')
-    }, [])
-
     return <div>
 
     </div>

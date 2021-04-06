@@ -4,22 +4,18 @@ import {getToken} from '@/utils/index'
 import {message} from 'antd'
 
 // 网络请求配置
-const baseURL = '//10.34.6.12:7002';
+const baseURL = '//10.34.6.27:7002';
 export const request: RequestConfig = {
     timeout: 30000,
-    errorConfig: {
-        adaptor: resData=>{
-            console.log('resData...', resData);
-            return {
-                success: true
-            }
-        }
+    errorHandler: err=>{
+        message.error(err.toString());
     },
     // 请求拦截器
     requestInterceptors: [(url, options) => {
-        url = baseURL + url;
+        if (!/\/\//.test(url)){
+            url = baseURL + url;
+        }
         let headers = {};
-        debugger
         if (getToken()){
             headers = {'authorization': getToken()}
         }
