@@ -14,7 +14,7 @@ const _layout: React.FC = (props) => {
             <MyHeader />
             <Layout>
                 <MyAside></MyAside>
-                <Content>{props.children}</Content>
+                <Content style={{height:'100%', boxSizing:'border-box', margin: '0 0 0 20px', overflowY:'scroll', padding: '20px', background: 'var(--bg)'}}>{props.children}</Content>
             </Layout>
         </Layout>
     </React.Suspense>
