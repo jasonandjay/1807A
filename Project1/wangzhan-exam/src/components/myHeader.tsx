@@ -2,7 +2,8 @@ import React, { useEffect } from 'react'
 import { Layout, Popover, Button, Avatar, Select } from 'antd'
 import logo from '@/assets/logo.png'
 import styles from './myHeader.less'
-import {getLocale, setLocale} from 'umi'
+import {setLocale} from 'umi'
+import Theme from './theme'
 
 const languages:{[key:string]:string} = {
     'zh': 'zh-CN',
@@ -34,6 +35,8 @@ const MyHeader: React.FC = () => {
             <Select.Option value="zh-CN">中文</Select.Option>
             <Select.Option value="en-US">英文</Select.Option>
         </Select>
+        <Theme />
+        <Button type="primary">按钮</Button>
         <Popover content={content} title={title}>
             <Avatar />  
             <span className={styles.username}>{'chenmanjie'}</span>
