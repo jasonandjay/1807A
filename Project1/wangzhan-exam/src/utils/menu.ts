@@ -10,7 +10,7 @@ export default [{
   },
   children: [{
       path: '/main/addQuestion',
-      name: 'question.addQuestion',
+      name: 'addQuestion',
       meta: {
           title: '添加试题',
           show: true,
@@ -18,7 +18,7 @@ export default [{
       },
   },{
       path: '/main/classifyQuestion',
-      name: 'question.classifyQuestion',
+      name: 'classifyQuestion',
       meta: {
           title: '试题分类',
           show: true,
@@ -26,7 +26,7 @@ export default [{
       },
   },{
       path: '/main/questionDetail',
-      name: 'question.questionDetail',
+      name: 'questionDetail',
       meta: {
           title: '试题详情',
           show: false,
@@ -34,7 +34,7 @@ export default [{
       },
   },{
       path: '/main/viewQuestion',
-      name: 'question.viewQuestion',
+      name: 'viewQuestion',
       meta: {
           title: '查看试题',
           show: true,
@@ -51,7 +51,7 @@ export default [{
   },
   children: [{
       path: '/main/addConsumer',
-      name: 'user.addUser',
+      name: 'addUser',
       meta: {
           title: '添加用户',
           show: true,
@@ -59,7 +59,7 @@ export default [{
       },
   },{
       path: '/main/showConsumer',
-      name: 'user.listUser',
+      name: 'listUser',
       meta: {
           title: '用户展示',
           show: true,
@@ -67,7 +67,7 @@ export default [{
       },
   }]
 },{
-  name: '考试管理',
+  name: 'paper',
   meta: {
       icon: NotificationOutlined,
       title: '',
@@ -75,7 +75,7 @@ export default [{
   },
   children: [{
       path: '/main/addPaper',
-      name: '添加考试',
+      name: 'addPaper',
       meta: {
           title: '添加考试',
           show: true,
@@ -83,7 +83,7 @@ export default [{
       },
   },{
       path: '/main/paperDetail',
-      name: '考试详情',
+      name: 'paperDetail',
       meta: {
           title: '考试详情',
           show: false,
@@ -91,7 +91,7 @@ export default [{
       },
   },{
       path: '/main/paperList',
-      name: '试卷列表',
+      name: 'paperList',
       meta: {
           title: '试卷列表',
           show: true,
@@ -99,31 +99,31 @@ export default [{
       },
   }]
 },{
-  name: '班级管理',
+  name: 'class',
   meta: {
       icon: BellOutlined,
       title: '班级管理',
       show: true
   },
   children: [{
-      path: '/main/classManager',
-      name: '班级管理',
+      path: '/main/classManage',
+      name: 'classManage',
       meta: {
           title: '班级管理',
           show: true,
           view_id: "main-grade"
       },
   },{
-      path: '/main/roomManager',
-      name: '教室管理',
+      path: '/main/roomManage',
+      name: 'roomManage',
       meta: {
           title: '教室管理',
           show: true,
           view_id: "main-room"
       },
   },{
-      path: '/main/studentManager',
-      name: '学生管理',
+      path: '/main/studentManage',
+      name: 'studentManage',
       meta: {
           title: '学生管理',
           show: true,
@@ -131,15 +131,15 @@ export default [{
       },
   }]
 },{
-  name: '阅卷管理',
+  name: 'marking',
   meta: {
       icon: CommentOutlined,
-      title: '',
+      title: '阅卷管理',
       show: true
   },
   children: [{
       path: '/main/markingDetail',
-      name: '批卷',
+      name: 'markingDetail',
       meta: {
           title: '批卷',
           show: false,
@@ -147,7 +147,7 @@ export default [{
       },
   },{
       path: '/main/markingList',
-      name: '待批班级',
+      name: 'markingList',
       meta: {
           title: '待批班级',
           show: true,
@@ -155,7 +155,7 @@ export default [{
       },
   },{
       path: '/main/markingStudentList',
-      name: '学生试卷列表',
+      name: 'markingStudentList',
       meta: {
           title: '学生试卷列表',
           show: false,

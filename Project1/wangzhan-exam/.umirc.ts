@@ -15,5 +15,12 @@ export default defineConfig({
     hmr: false,
   },
   fastRefresh: {},
-  antd: { }
+  antd: { },
+  locale: {
+    default: 'zh-CN',
+    antd: false,
+    title: false,
+    baseNavigator: true,
+    baseSeparator: '-',
+  },
 });
