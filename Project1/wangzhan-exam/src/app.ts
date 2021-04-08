@@ -4,7 +4,7 @@ import {getToken} from '@/utils/index'
 import {message} from 'antd'
 
 // 网络请求配置
-const baseURL = '//10.34.6.11:7002';
+const baseURL = '//10.34.6.17:7002';
 export const request: RequestConfig = {
     timeout: 30000,
     errorHandler: err=>{
