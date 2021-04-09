@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import {Form, Input, Select, Button} from 'antd'
 import Editor from 'for-editor'
+import {upload} from '@/services/index'
  
 const {Item, useForm} = Form;
 const AddQuestion:React.FC = props=>{
@@ -15,14 +16,33 @@ const AddQuestion:React.FC = props=>{
         console.log('form...', form.getFieldsValue());
     }
 
+    async function addImg(file: File, index: number){
+        console.log('arguments...', arguments);
+        let result = await upload(file);
+        let value = form.getFieldValue('questions_stem');
+        value += `![${result.data[0].name}](${result.data[0].path})`
+        form.setFields([{
+            name: 'questions_stem',
+            value
+        }])
+    }
 
     return <div>
-        <Form {...ItemLayout} layout="vertical" onFinish={finish} form={form}>
+        <Form 
+            {...ItemLayout} 
+            layout="vertical" 
+            onFinish={finish} 
+            form={form} 
+            key={JSON.stringify({})}
+            initialValues={{
+                questions_stem: ''
+            }}
+        >
             <Item label="题干" name="title" rules={[{required: true, message: '请输入试题题干'}]}>
                 <Input />
             </Item>
             <Item label="题目题干" wrapperCol={{span: 24}} name="questions_stem" rules={[{required: true, message: '请输入题目题干'}]}>
-                <Editor></Editor>
+                <Editor addImg={(file, index)=>addImg(file, index)}></Editor>
             </Item>
             <Item label="考试类型" name="exam_id"> 
                 <Select></Select>

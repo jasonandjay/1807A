@@ -18,3 +18,13 @@ export function getUserInfo(){
 export function getViewAuthority(){
     return request('/user/view_authority')
 }
+
+// 上传文件
+export function upload(file: File){
+    let form = new FormData();
+    form.append(file.name, file);
+    return request('http://123.206.55.50:11000/upload', {
+        method: 'POST',
+        data: form
+    });
+}
