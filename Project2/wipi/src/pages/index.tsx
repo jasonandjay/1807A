@@ -1,10 +1,10 @@
 import styles from './index.less';
-import store from '@/store'
 import { observer } from "mobx-react-lite"
 import { useEffect } from 'react';
+import useStore from '@/context/useStore'
 
 function IndexPage() {
-  let {article} = store;
+  let {article} = useStore();
   
   useEffect(() => {
     setTimeout(()=>{

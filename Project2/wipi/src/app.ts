@@ -1,5 +1,9 @@
 import { RequestConfig } from 'umi';
 import {message} from 'antd'
+// 在根组件注入store
+import StoreContext from '@/context/storeContext';
+import store from '@/store';
+import React from 'react';
 
 // 网络请求配置
 const baseURL = '//api.blog.wipi.tech/';
@@ -36,3 +40,8 @@ export const request: RequestConfig = {
         return response;
     }]
 };
+
+// 覆盖react-dom 渲染时的根组件
+export function rootContainer(container: any) {
+    return React.createElement(StoreContext.Provider, {value: store}, container);
+}
