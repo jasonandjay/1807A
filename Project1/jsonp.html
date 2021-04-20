@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>仿百度关键词提示</title>
+</head>
+<body>
+  <input type="text" id="search">
+
+  <script>
+      let search = document.getElementById('search')
+      search.addEventListener('change', function(e){
+        const key = `callback${+new Date()}`;
+        window[key] = function(data){
+            console.log('data...', data);
+            delete window[key];
+        }
+        jsonp(e.target.value, key);
+      })
+
+      function jsonp(str, cb){
+        let script = document.createElement('script');
+        script.src = `https://www.baidu.com/sugrec?pre=1&p=3&ie=utf-8&json=1&prod=pc&from=pc_web&wd=${str}&req=2&bs=jsonp&csor=5&cb=${cb}&_=${+new Date}`
+        document.body.appendChild(script);
+        script.onload = function(){
+            script.parentNode.removeChild(script);
+        }
+      }
+  </script>
+</body>
+</html>
