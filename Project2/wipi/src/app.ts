@@ -6,7 +6,7 @@ import store from '@/store';
 import React from 'react';
 
 // 网络请求配置
-const baseURL = '//api.blog.wipi.tech/';
+const baseURL = '//api.blog.wipi.tech';
 export const request: RequestConfig = {
     timeout: 30000,
     errorHandler: err=>{
