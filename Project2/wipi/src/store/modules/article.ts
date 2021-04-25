@@ -1,5 +1,5 @@
-import { getArticleAllRecommend, getArticleList, getArticleRecommend } from "@/services";
-import { IArticleItem, IRecommendedItem } from "@/utils/interface";
+import { getArticleAllRecommend, getArticleDetail, getArticleList, getArticleRecommend } from "@/services";
+import { IArticleItem, IRecommendedItem, IArticleDetail } from "@/utils/interface";
 import { makeAutoObservable } from "mobx"
 
 
@@ -9,8 +9,17 @@ class Article{
     }
     articleList: IArticleItem[] = []
     articleRecommend: IRecommendedItem[] = []
+    articleDetail: IArticleDetail = {} as IArticleDetail
     page = 1;
     total = 0;
+
+    // 获取文章详情
+    async getArticleDetail(id:string){
+        let result = await getArticleDetail(id);
+        if (result.statusCode === 200){
+            this.articleDetail = result.data;
+        }
+    }
 
     //  获取侧边栏推荐
     async getArticleRecommend(){

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XSS攻击案例</title>
+</head>
+<body>
+    <label for="email">电子邮箱:</label>
+    <!-- <input id="email" type="text"> -->
+    <span id="email"></span>
+    <img id="logo" src="" />
+
+
+    <script>
+        let queryStr = location.href.split('?')[1];
+        let querys = {};
+        queryStr.split('&').map(item=>{
+            let arrs = item.split('=');
+            querys[arrs[0]] = arrs[1];
+        })
+        document.querySelector('#email').innerHTML = decodeURIComponent(querys.email);
+        document.querySelector('#logo').src = decodeURIComponent(querys.src);
+        
+       
+    </script>
+</body>
+</html>
+<!-- /><script>alert(document.cookie)</script><br x= -->
+<!-- // 标签注入 </span><script>alert(document.cookie)</script><span> -->
+<!-- // img注入 </span><img src="htpp" onerror="alert(document.cookie)" /><span> -->

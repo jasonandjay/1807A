@@ -1,0 +1,105 @@
+.header{
+    position: relative;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border-color);
+    a>img{
+        height: 36px;
+        vertical-align: middle;
+        margin-right: 4rem;
+    }
+    nav{
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        ul{
+            display: flex;
+        }
+        a{
+            padding: 0 16px;
+        }
+        a:hover{
+            color: var(--primary-color);
+        }
+    }
+    a{
+        color: inherit;
+    }
+}
+
+.mobileNav{
+    position: absolute;
+    right: 15px;
+    span{
+        display: block;
+        width: 25px;
+        height: 4px;
+        border-radius: var(--border-radius);
+        background-color: var(--primary-color);
+        opacity: 1;
+        transition: all 250ms ease-in-out 0s;
+    }
+    span:nth-child(2){
+        margin: 5px 0;
+    }
+}
+.mobileNav.active{
+    span:nth-child(2){
+        opacity: 0;
+    }
+    span:nth-child(1){
+        transform: translateY(9px) rotate(45deg);
+    }
+    span:nth-child(3){
+        transform: translateY(-9px) rotate(-45deg);
+    }
+}
+@media (max-width: 768px) {
+    .mobileNav{
+        display: block;
+    }
+    nav{
+        position: absolute;
+        height:0;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        top: 64px;
+        left: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height .3s ease;
+    }
+    .mobileMenu{
+        max-height: 100vh;
+        overflow: visible;
+        ul{
+            flex-direction: column;
+            width: 100%;
+            background: var(--bg);
+            align-items: center;
+        }
+        ul:last-child{
+            padding-bottom: 10px;
+        }
+        li{
+            text-align: center;
+            width: 100%;
+            line-height:48px;
+        }
+    }
+    :global{
+        button.ant-switch{
+            margin: 10px 0;
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    .mobileNav{
+        display: none;
+    }
+}

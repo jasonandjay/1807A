@@ -21,3 +21,8 @@ export function getArticleAllRecommend(){
 export function getArticleRecommend(){
     return request('/api/article//recommend')
 }
+
+// 获取文章详情
+export function getArticleDetail(id:string){
+    return request(`/api/article/${id}`)
+}
