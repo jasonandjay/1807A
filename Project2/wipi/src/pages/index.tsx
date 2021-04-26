@@ -4,7 +4,8 @@ import { useEffect } from 'react';
 import useStore from '@/context/useStore'
 import { timeAgo } from '@/utils/index'
 import DobuleColumn from '@/layouts/dobuleColumn'
-import {useHistory} from 'umi'
+import { useHistory } from 'umi'
+import InfiniteScroll from 'react-infinite-scroller';
 
 function IndexPage() {
   let { article } = useStore();
@@ -17,27 +18,34 @@ function IndexPage() {
     article.getArticleList();
   }, [])
 
+  function loadFunc() {
+    article.getArticleList();
+  }
+
   console.log(article.articleList);
-  const left = <div>
-    <div>{JSON.stringify(article.articleRecommend)}</div>
-    <h1 className={styles.title}>Page index</h1>
-    <ul>{
-      article.articleList.map(item => {
-        return <li key={item.id} onClick={()=>history.push(`/article/${item.id}`)}>
-          <img src={item.cover} alt="" />
-          <div>
-            <p>{item.title}</p>
-            <p>{item.summary}</p>
-            <p>
-              <span>{item.tags.map(value => value.label).join("、")}·</span>
-              <span>{item.views}次阅读·</span>
-              <span>{timeAgo(+ new Date(item.createAt))}前</span>
-            </p>
-          </div>
-        </li>
-      })
-    }</ul>
-  </div>
+  const left = (
+    <InfiniteScroll
+      pageStart={0}
+      loadMore={loadFunc}
+      hasMore={(article.page-1) * 12 < article.total}
+      loader={<div className="loader" key={0}>Loading ...</div>}
+    >{
+        article.articleList.map(item => {
+          return <li key={item.id} onClick={() => history.push(`/article/${item.id}`)}>
+            <img src={item.cover} alt="" />
+            <div>
+              <p>{item.title}</p>
+              <p>{item.summary}</p>
+              <p>
+                <span>{item.tags.map(value => value.label).join("、")}·</span>
+                <span>{item.views}次阅读·</span>
+                <span>{timeAgo(+ new Date(item.createAt))}前</span>
+              </p>
+            </div>
+          </li>
+        })
+      }</InfiniteScroll>)
+
   return (
     <DobuleColumn
       left={left}

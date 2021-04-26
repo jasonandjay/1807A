@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { IRouteComponentProps } from "umi"
 import {observer} from 'mobx-react-lite'
 import Highlight from '@/components/highlight'
+import ViewerImage from '@/components/viewerImage'
 
 const ArticleDetail: React.FC<IRouteComponentProps<{id:string}>> = ({location, match})=>{
     const id = match.params.id;
@@ -13,9 +14,9 @@ const ArticleDetail: React.FC<IRouteComponentProps<{id:string}>> = ({location, m
     }, [])
     // return <div>{JSON.stringify(article.articleDetail)}</div>  
 
-    return <div>
+    return <ViewerImage><div>
         <Highlight str={article.articleDetail.html}/>
-    </div>
+    </div></ViewerImage>
 }
 
 export default observer(ArticleDetail);
