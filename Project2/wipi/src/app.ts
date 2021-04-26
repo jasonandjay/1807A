@@ -4,6 +4,11 @@ import {message} from 'antd'
 import StoreContext from '@/context/storeContext';
 import store from '@/store';
 import React from 'react';
+// 引入viewjs的样式
+import 'viewerjs/dist/viewer.css';
+// 引入nprogress的样式
+import 'nprogress/nprogress.css';
+import Nprogress from 'nprogress';
 
 // 网络请求配置
 const baseURL = '//api.blog.wipi.tech';
@@ -44,4 +49,11 @@ export const request: RequestConfig = {
 // 覆盖react-dom 渲染时的根组件
 export function rootContainer(container: any) {
     return React.createElement(StoreContext.Provider, {value: store}, container);
+}
+
+// 配置路由切换回调
+export function onRouteChange() {
+    setTimeout(()=>{
+        Nprogress.done();
+    }, 0)
 }
