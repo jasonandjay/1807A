@@ -26,4 +26,7 @@ export default {
 
 <style>
 /*每个页面公共css */
+page, ._div{
+  height: 100%;
+}
 </style>
