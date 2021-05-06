@@ -16,7 +16,7 @@ export default {
   methods: {
     searchAddress() {
       wx.navigateTo({ url: "/pages/sign/mapSuggestion" });
-    },
+    }
   },
 };
 </script>

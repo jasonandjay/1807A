@@ -34,7 +34,7 @@ export default {
 		// 小程序路由跳转
 		/**
 		 * navigateTo: 追加，路由最多十层
-		 * redirectTo: 替换
+		 * redirectTo: 替换s
 		 * navigateBack: 返回
 		 * reluanch：重新加载
 		 * switchTab: 切换tab
@@ -44,7 +44,7 @@ export default {
   created() {
     console.log('this...', this);
 	  this.getCurLocation();
-  },
+  }
 };
 </script>
 

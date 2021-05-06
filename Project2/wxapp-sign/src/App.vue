@@ -14,6 +14,11 @@ export default {
         }
       },
     });
+     // 每一次进入小程序做一次生物识别 
+    let auth = wx.getStorageSync('auth');
+    if (!auth || +new Date - Number(auth) > 7*24*60*60*1000) {
+      wx.redirectTo({url: '/pages/my/auth'});
+    }
   },
   onShow: function () {
     console.log("App Show");
