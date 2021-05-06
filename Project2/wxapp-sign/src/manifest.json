@@ -5,7 +5,8 @@
 	"versionName": "1.0.0",
 	"versionCode": "100",
 	"transformPx": false,
-	"mp-weixin": { /* 微信小程序特有相关 */
+	"mp-weixin": {
+		/* 微信小程序特有相关 */
 		"appid": "wx3375420e2c184d34",
 		"setting": {
 			"urlCheck": false
@@ -15,6 +16,12 @@
 				"desc": "你的位置信息将用于小程序当前位置的效果展示" // 高速公路行驶持续后台定位
 			}
 		},
-		"usingComponents": true
+		"usingComponents": true,
+		"plugins": {
+			"chooseLocation": {
+				"version": "1.0.6",
+				"provider": "wx76a9a06e5b4e693e"
+			}
+		}
 	}
 }

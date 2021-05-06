@@ -41,6 +41,12 @@
 			"style": {
 				"navigationBarTitleText": "地址搜索"
 			}
+		},
+		{
+			"path": "pages/sign/mapSuggestion",
+			"style": {
+				"navigationBarTitleText": "地图选点"
+			}
 		}
 	],
 	"globalStyle": {
