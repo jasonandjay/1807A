@@ -6,6 +6,12 @@ export let login = code=>{
     code
   })
 }
+// 支付
+export let pay = total_fee=>{
+  return request.post('/sign/pay', {
+    total_fee
+  })
+}
 
 // 添加面试
 export let addSign = params=>{
