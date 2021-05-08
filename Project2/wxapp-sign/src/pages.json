@@ -33,7 +33,9 @@
 		{
 			"path": "pages/sign/signList",
 			"style": {
-				"navigationBarTitleText": "面试列表"
+				"navigationBarTitleText": "面试列表",
+				"enablePullDownRefresh": true,
+				"onReachBottomDistance": 50
 			}
 		},
 		{
