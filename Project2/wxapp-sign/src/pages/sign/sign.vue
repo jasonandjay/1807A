@@ -5,9 +5,11 @@
         :include-points="points" 
         :markers="markers"
         :circles="circles"
+        :longitude="longitude"
+        :latitude="latitude"
     ></map>
     <cover-view>
-      <button>打卡</button>
+      <button @click="sign">打卡</button>
     </cover-view>
   </div>
 </template>
@@ -21,16 +23,31 @@ export default {
         return {
             longitude: "",
             latitude: "",
+            distance: 0
         };
     },
     methods: {
         getCurLocation() {
             wx.getLocation({
+                type: 'gcj02',
                 success: (res) => {
                     this.longitude = res.longitude;
                     this.latitude = res.latitude;
                 },
             });
+        },
+        sign(){
+            if (this.distance && this.distance < 200){
+                wx.showToast({
+                    icon: 'none',
+                    title: '打卡成功'
+                })
+            }else{
+                wx.showToast({
+                    icon: 'none',
+                    title: `你离目的地还有${this.distance}米`
+                })
+            }
         }
     },
     computed: {
@@ -54,7 +71,14 @@ export default {
                     height: 25,
                     label: {content: this.signDetail.company},
                     iconPath: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsxsimg.xiaoyuanzhao.com%2F16%2F6E%2F1653C3DC221D70E6A18A761CF837936E.png&refer=http%3A%2F%2Fsxsimg.xiaoyuanzhao.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1623204035&t=1159f9315a90a2805c85df8d8062ba98'
-                }]
+                }].concat({
+                    latitude: this.latitude,
+                    longitude: this.longitude,
+                    width: 25,
+                    height: 25,
+                    label: {content: this.signDetail.company},
+                    iconPath: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsxsimg.xiaoyuanzhao.com%2F16%2F6E%2F1653C3DC221D70E6A18A761CF837936E.png&refer=http%3A%2F%2Fsxsimg.xiaoyuanzhao.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1623204035&t=1159f9315a90a2805c85df8d8062ba98'
+                })
             }
             return [];
         },
@@ -62,15 +86,17 @@ export default {
             return [{latitude: this.latitude, longitude: this.longitude}, ...this.markers];
         },
         circles(){
-            let distance = getDistance(this.latitude, this.longitude, this.address.latitude, this.address.longitude);
-            console.log('distance...', distance);
-            let fillColor = distance<1000?'#00ff00':'#ccc';
+            this.distance = Math.ceil(getDistance(this.latitude, this.longitude, this.address.location.lat, this.address.location.lng));
+            let color = this.distance<200?'#00ff00':'#c0c0c0';
+            let fillColor = this.distance<200?'#00ff00b3': '#c0c0c0b3';
+            // console.log('distance...', distance, this, color);
             return [{
                 latitude: this.address.location.lat,
                 longitude: this.address.location.lng,
-                radius: 1000,
+                radius: 200,
+                strokeWidth: 5,
                 fillColor,
-                color: '#000'
+                color
             }]
         }
     },
