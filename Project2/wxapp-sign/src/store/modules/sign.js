@@ -1,7 +1,8 @@
-import {getSignList} from "@/services/index";
+import {getSignList, getSignDetail} from "@/services/index";
 
 const state = {
-    signList: {},
+    signList: [],
+    signDetail:{},
     page: 1,
     pageSize: 10,
     status: -1, //不传表示全部，-1表示未开始，0表示已打卡，1表示已放弃
@@ -28,6 +29,12 @@ const actions = {
             commit('updateState', {key: 'signList', value: signList})
         }else{
             commit('updateState', {key: 'signList', value: [...state.signList, ...signList]})
+        }
+    },
+    async getSignDetail({dispatch, commit, state}, payload){
+        let result = await getSignDetail(payload);
+        if (result.data){
+            commit('updateState', {key: 'signDetail', value: result.data})
         }
     }
 }

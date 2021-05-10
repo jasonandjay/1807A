@@ -25,11 +25,8 @@ export default {
 			getPayInfo: 'pay/getPayInfo'
 		}),
 		async pay(){
-			console.log('money...', this.money)
 			await this.getPayInfo(this.money)
-	
-			let {timeStamp, nonceStr, paySign} = this.payInfo;
-			
+			let {timeStamp, nonceStr, paySign} = this.payInfo;			
 			wx.requestPayment({
 				timeStamp,
 				nonceStr,

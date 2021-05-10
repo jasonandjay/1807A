@@ -5,7 +5,7 @@
         </header>
         <div class="wrap">
             <section v-if="signList.length">
-                <li v-for="item in signList" :key="item.id">
+                <navigator :url="`/pages/sign/signDetail?id=${item.id}`" v-for="item in signList" :key="item.id">
                     <p>{{item.company}}</p>
                     <p>{{item.address.address}}</p>
                     <p>
@@ -13,7 +13,7 @@
                         <span v-if="item.sign_time">签到时间：{{item.sign_time | formatTime}}</span>
                     </p>
                     <button>{{headers[item.status+1]}}</button>
-                </li>
+                </navigator>
             </section>
             <span v-else>当前分类没有面试!</span>
         </div>
