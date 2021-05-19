@@ -41,6 +41,8 @@ import xizang from "../map/province/xizang.json";
 import yunnan from "../map/province/yunnan.json";
 import zhejiang from "../map/province/zhejiang.json";
 
+import axios from 'axios'
+
 function randomData() {
   return Math.round(Math.random() * 500);
 }
@@ -83,6 +85,12 @@ const mydata = [
 
 echarts.registerMap("china", china);
 export default {
+  data(){
+      return {
+        province: {}, // 省份数据
+        city: {} // 城市数据
+      }
+  },
   props: ["wh"],
   watch: {
     wh() {
@@ -90,7 +98,7 @@ export default {
     },
   },
   methods: {
-    getMapbyName(name) {
+    getMapbyProvinceName(name) {
       let index = mydata.findIndex(item=>item.name === name);
       return mydata[index];
     },
@@ -99,7 +107,9 @@ export default {
         echarts.registerMap(item.name, item.map);
       }
       // 1. 初始化echart实例
-      this.chart = echarts.init(this.$refs.container);
+      if (!this.chart){
+        this.chart = echarts.init(this.$refs.container);
+      }
 
       // 2. 配置option
       const option = {
@@ -150,10 +160,76 @@ export default {
   mounted() {
     setTimeout(() => {
       this.renderChart();
-      this.chart.on("click", (params)=>{
+      this.chart.on("click", async (params)=>{
         console.log("params...", params);
-        let item = this.getMapbyName(params.name);
-        this.renderChart(item);
+        if (this.city.id){
+          console.log('点击了城市')
+          // 点击了城市
+          this.renderChart();
+          this.city = this.province = {};
+        }else if  (this.province.name){
+          console.log('点击了省份')
+
+          // 点击了省份
+          let curCity = params.name;
+          let index = this.province.map.features.findIndex(item=>item.properties.name === curCity);
+          let cityId = this.province.map.features[index].id;
+          let cityData = await axios.get(`/city/${cityId}.json`);
+          this.city = {id: cityId};
+          console.log('cityId...', cityId, cityData); 
+          // 注册城市地图
+          echarts.registerMap(cityId, cityData.data);
+          const option = {
+            //左侧小导航图标
+            visualMap: {
+              show: true,
+              x: "left",
+              y: "center",
+              splitList: [
+                { start: 500, end: 600 },
+                { start: 400, end: 500 },
+                { start: 300, end: 400 },
+                { start: 200, end: 300 },
+                { start: 100, end: 200 },
+                { start: 0, end: 100 },
+              ],
+              color: [
+                "#5475f5",
+                "#9feaa5",
+                "#85daef",
+                "#74e2ca",
+                "#e6ac53",
+                "#9fb5ea",
+              ],
+            },
+            series: [
+              {
+                name: "数据",
+                label: {
+                  normal: {
+                    show: true, //省份名称
+                  },
+                  emphasis: {
+                    show: false,
+                  },
+                },
+                type: "map",
+                mapType: cityId,
+                // data: mydata,
+              },
+            ],
+          };
+
+          // 3. 更新echart
+          this.chart.setOption(option);
+
+        }else{
+          // 点击了全国
+          let item = this.getMapbyProvinceName(params.name);
+          this.province = item;
+          // 判断当前点击是省份
+          this.renderChart(item);
+        }
       });
     });
   },
