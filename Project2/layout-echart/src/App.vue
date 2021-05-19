@@ -29,27 +29,35 @@ import VueGridLayout from "vue-grid-layout";
 import chart1 from './components/chart1'
 import chart2 from './components/chart2'
 
+import chart7 from './components/chart7'
+import chart8 from './components/chart8'
+import chart9 from './components/chart9'
+
+
 export default {
   components: {
     GridLayout: VueGridLayout.GridLayout,
     GridItem: VueGridLayout.GridItem,
     chart1,
-    chart2
+    chart2,
+    chart7,
+    chart8,
+    chart9
   },
   data() {
     return {
       layout: [
         { x: 0, y: 0, w: 4, h: 2, i: "0", static: false, component: 'chart1' },
         { x: 4, y: 0, w: 4, h: 4, i: "1", static: false, component: 'chart2' },
-        { x: 8, y: 0, w: 4, h: 5, i: "2", static: false },
+        { x: 8, y: 0, w: 4, h: 3, i: "2", static: false },
 
         { x: 0, y: 2, w: 4, h: 5, i: "6", static: false },
         { x: 4, y: 5, w: 4, h: 6, i: "7", static: false },
-        { x: 8, y: 5, w: 4, h: 5, i: "8", static: false },
+        { x: 8, y: 3, w: 4, h: 3, i: "8", static: false },
 
-        { x: 0, y: 7, w: 4, h: 7, i: "9", static: false },
-        { x: 4, y: 4, w: 4, h: 4, i: "10", static: false },
-        { x: 8, y: 4, w: 4, h: 4, i: "11", static: false }
+        { x: 0, y: 7, w: 4, h: 10, i: "9", static: false, component: 'chart7' },
+        { x: 4, y: 10, w: 4, h: 7, i: "10", static: false, component: 'chart8' },
+        { x: 8, y: 6, w: 4, h: 11, i: "11", static: false, component: 'chart9' }
       ],
       draggable: true,
       resizable: true,
